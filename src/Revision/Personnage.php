@@ -4,19 +4,33 @@ declare(strict_types=1);
 
 namespace App\Revision;
 
+/**
+ * 1. La class doit avoir le même nom que le fichier PHP
+ * 2. Une seule class par fichier PHP
+ * 3. Le nom de la class doit commencer par une majuscule
+ * (4. Les class sont généralement au singulier)
+ * 5. Chaque class doit possèder un namespace (correspond à l'arborescence)
+ * 6. ça doit êre au début du fichier (au dessus des uses et de la class)
+ * 7. Le répertoire "src" correspond au namespace "App"
+ * 8. Ça doit être nommé avec les même conventions que les classes (commence
+ *    par une majuscule, au singulier)
+ */
 class Personnage
 {
-    private string $name;
+    protected string $name;
 
-    private int $life;
+    protected int $life;
 
-    private int $attack;
+    protected int $attack;
+
+    protected int $defense;
 
     public function __construct(string $name, int $life = 100, int $attack = 40)
     {
         $this->name = $name;
         $this->life = $life;
         $this->attack = $attack;
+        $this->defense = 78;
     }
 
     public function attaque(Personnage $cible): void
@@ -27,8 +41,10 @@ class Personnage
     }
 }
 
-$arthur = new Personnage("Arthur");
-$merlin = new Personnage("Merlin l'enchanteur", 80, 60);
-
-$arthur->attaque($merlin); // merlin vas perdre le nombre d'attaque d'arthur
-$merlin->attaque($arthur);
+class Magicien extends Personnage
+{
+    public function __construct(string $name, int $life = 100, int $attack = 40)
+    {
+        parent::__construct($name, 80, 60);
+    }
+}
