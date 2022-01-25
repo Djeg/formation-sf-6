@@ -30,3 +30,8 @@
 - Ajouter une méthode "diviser" qui accépte 2 paramètres
   de route : $x, $y et qui retourne une réponse avec le
   resultat de la division
+
+# 2. Request & Response
+
+1. Créer un dossier "Exo2" dans le répertoire "Controller"
+2. Créer le controller ""
