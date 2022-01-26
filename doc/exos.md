@@ -55,15 +55,22 @@
   affiche un formulaire (en méthode POST) avec les champs suivants:
 
   - nom, description, prix et image
-    créer une nouvelle pizza à partir de la Request:
+
+  créer une nouvelle pizza à partir de la Request:
+
   - `$request->getMethod()` : retourne la méthode (GET ou POST)
   - `$request->request->get('name')` récupére la valeur du champ
     de formulaire "name"
-    Enregistrer la pizza dans la base de données en utilisant
-    le manager
+
+  Enregistrer la pizza dans la base de données en utilisant
+  le manager
 
 - Ajouter une route "/admin/pizza/{id}" qui affiche une pizza
   via une page html twig
+
+- Ajouter une route et une méthode "/admin/pizza/{id}/modifier". Qui
+  affiche un formulaire (en méthode POST) avec la possibilité de modifier
+  une pizza
 
 - Ajouter une route "/admin/pizza/{id}/delete" qui supprime
   une pizza
