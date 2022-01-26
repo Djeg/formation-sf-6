@@ -31,7 +31,50 @@
   de route : $x, $y et qui retourne une réponse avec le
   resultat de la division
 
-# 2. Request & Response
+# Pizza - CRUD
 
-1. Créer un dossier "Exo2" dans le répertoire "Controller"
-2. Créer le controller ""
+- Créer une entité Pizza avec les champs suivant:
+
+  - name: string
+  - description: text
+  - price: float
+  - image: string
+
+- Synchronizer votre entité avec la base de données
+  (`symfony console doctrine:schema:update --force`)
+
+- Créer un répertoire "Admin" dans le répertoire
+  controller et ajouter un controller : "PizzaAdminController"
+
+- Ajouter une route et une méthode "/admin/pizza/list". Cette
+  route récupére toutes les pizzas et les affiches dans une
+  page HTML (suivez au maximum les conventions de nommage, faite
+  une page html simple)
+
+- Ajouter une route et une méthode "/admin/pizza/nouvelle". Qui
+  affiche un formulaire (en méthode POST) avec les champs suivants:
+
+  - nom, description, prix et image
+    créer une nouvelle pizza à partir de la Request:
+  - `$request->getMethod()` : retourne la méthode (GET ou POST)
+  - `$request->request->get('name')` récupére la valeur du champ
+    de formulaire "name"
+    Enregistrer la pizza dans la base de données en utilisant
+    le manager
+
+- Ajouter une route "/admin/pizza/{id}" qui affiche une pizza
+  via une page html twig
+
+- Ajouter une route "/admin/pizza/{id}/delete" qui supprime
+  une pizza
+
+# Ingredient - CRUD
+
+- Créer une entité Ingredient avec les champs suivant:
+
+  - name: string
+  - price: float
+  - image: string
+
+- Faire la même chose que les pizzas mais pour les ingrédients.
+  Essayer de ne pas faire de copier/coller !

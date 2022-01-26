@@ -1,0 +1,17 @@
+<html>
+
+  <head>
+    <title>Ma Page</title>
+  </head>
+
+  <body>
+    <h1>Pizza : {{ pizza.name }}</h1>
+    <p>Prix : {{ pizza.price }}</p>
+
+    <h2>Liste des pizzas</h2>
+
+    {% for pizza in pizzas %}
+      <p>{{ pizza.name }}</p>
+    {% endfor %}
+  </body>
+</html>
