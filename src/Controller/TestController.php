@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,9 +13,11 @@ class TestController
     /**
      * @Route("/hello", name="app_test_hello")
      */
-    public function hello(): Response
+    public function hello(Request $request): Response
     {
-        return new Response('Hello');
+        $taille = $request->query->get('taille');
+
+        return new Response('Vous avez demandé la taille ' . $taille);
     }
 
     /**

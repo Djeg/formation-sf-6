@@ -45,7 +45,7 @@ class CalculatriceController
     public function diviser(int $x, int $y): Response
     {
         if ($y === 0) {
-            return new Response("Impossible de diviser par 0");
+            return new Response("Impossible de diviser par 0", 400);
         }
 
         $total = $x / $y;
