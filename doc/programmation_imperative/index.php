@@ -5,6 +5,8 @@ function afficherUtilisateur($name, $age)
     echo "<p>Utilisateur : $name, age: $age</p>";
 }
 
+$_POST['email'];
+
 $username = "john";
 $age = 34;
 

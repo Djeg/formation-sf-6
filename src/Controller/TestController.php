@@ -15,6 +15,7 @@ class TestController
      */
     public function hello(Request $request): Response
     {
+        $request->request->get('email'); // $_POST['email']
         $taille = $request->query->get('taille');
 
         return new Response('Vous avez demandé la taille ' . $taille);

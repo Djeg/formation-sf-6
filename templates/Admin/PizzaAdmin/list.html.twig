@@ -1,0 +1,5 @@
+<h1>Liste des pizzas</h1>
+
+{% for pizza in pizzas %}
+  <p>{{ pizza.name }}, prix: {{ pizza.price }} €<p>
+{% endfor %}

@@ -22,11 +22,8 @@ class Pizza
     #[ORM\Column(type: 'float')]
     private $price;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $size;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $base;
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $image;
 
     public function getId(): ?int
     {
@@ -69,26 +66,14 @@ class Pizza
         return $this;
     }
 
-    public function getSize(): ?string
+    public function getImage(): ?string
     {
-        return $this->size;
+        return $this->image;
     }
 
-    public function setSize(string $size): self
+    public function setImage(?string $image): self
     {
-        $this->size = $size;
-
-        return $this;
-    }
-
-    public function getBase(): ?string
-    {
-        return $this->base;
-    }
-
-    public function setBase(string $base): self
-    {
-        $this->base = $base;
+        $this->image = $image;
 
         return $this;
     }
