@@ -7,6 +7,7 @@ namespace App\Controller\Admin;
 use App\Entity\Pizza;
 use App\Repository\PizzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use ProxyManager\ProxyGenerator\LazyLoadingGhost\MethodGenerator\SetProxyInitializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,14 +40,11 @@ class PizzaAdminController extends AbstractController
         // Si le formulaire a été envoyé
         if ($method === 'POST') {
             // Création d'une nouvelle pizza
-            $pizza = new Pizza();
-
-            // On vas remplir notre pizza avec
-            // les données du formulaire
-            $pizza->setName($request->request->get('name'));
-            $pizza->setDescription($request->request->get('description'));
-            $pizza->setPrice((float)$request->request->get('price'));
-            $pizza->setImage($request->request->get('image'));
+            $pizza = (new Pizza())
+                ->setName($request->request->get('name'))
+                ->setDescription($request->request->get('description'))
+                ->setPrice($request->request->get('price'))
+                ->setImage($request->request->get('image'));
 
             // On enregistre la pizza en base de données
             $manager->persist($pizza);
@@ -106,10 +104,11 @@ class PizzaAdminController extends AbstractController
         if ($request->getMethod() === 'POST') {
             // On vas remplir notre pizza avec
             // les données du formulaire
-            $pizza->setName($request->request->get('name'));
-            $pizza->setDescription($request->request->get('description'));
-            $pizza->setPrice((float)$request->request->get('price'));
-            $pizza->setImage($request->request->get('image'));
+            $pizza
+                ->setName($request->request->get('name'))
+                ->setDescription($request->request->get('description'))
+                ->setPrice($request->request->get('price'))
+                ->setImage($request->request->get('image'));
 
             // On enregistre la pizza en base de données
             $manager->persist($pizza);

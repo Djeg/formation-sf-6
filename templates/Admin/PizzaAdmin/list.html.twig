@@ -1,5 +1,16 @@
-<h1>Liste des pizzas</h1>
+{% extends 'base.html.twig' %}
 
-{% for pizza in pizzas %}
-  <p>{{ pizza.name }}, prix: {{ pizza.price }} €<p>
-{% endfor %}
+{% block subTitle %}
+  Liste des pizzas
+{% endblock %}
+
+{% block body %}
+  <h1>Liste des pizzas</h1>
+  <p>
+    <a href="{{ path('app_admin_pizzaAdmin_create') }}">Ajouter une pizza</a>
+  </p>
+
+  {% for pizza in pizzas %}
+    <p>{{ pizza.name }}, prix: {{ pizza.price }} €<p>
+  {% endfor %}
+{% endblock %}

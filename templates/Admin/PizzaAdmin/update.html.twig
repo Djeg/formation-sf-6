@@ -1,21 +1,25 @@
-<form method="POST">
-  <div>
-    <label for="name">Nom de la pizza :</label>
-    <input type="text" name="name" id="name" value="{{ pizza.name }}" />
-  </div>
-  <div>
-    <label for="description">Description de la pizza :</label>
-    <textarea id="description" name="description">{{ pizza.description }}</textarea>
-  </div>
-  <div>
-    <label for="price">Prix de la pizza :</label>
-    <input type="money" name="price" id="price" value="{{ pizza.price }}" />
-  </div>
-  <div>
-    <label for="image">Image de la pizza :</label>
-    <input type="text" name="image" id="image" value="{{ pizza.image }}" />
-  </div>
-  <div>
-    <button type="submit">Mettre à jour la pizza</button>
-  </div>
-</form>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <form method="POST">
+    <div>
+      <label for="name">Nom de la pizza :</label>
+      <input type="text" name="name" id="name" value="{{ pizza.name }}" />
+    </div>
+    <div>
+      <label for="description">Description de la pizza :</label>
+      <textarea id="description" name="description">{{ pizza.description }}</textarea>
+    </div>
+    <div>
+      <label for="price">Prix de la pizza :</label>
+      <input type="money" name="price" id="price" value="{{ pizza.price }}" />
+    </div>
+    <div>
+      <label for="image">Image de la pizza :</label>
+      <input type="text" name="image" id="image" value="{{ pizza.image }}" />
+    </div>
+    <div>
+      <button type="submit">Mettre à jour la pizza</button>
+    </div>
+  </form>
+{% endblock %}

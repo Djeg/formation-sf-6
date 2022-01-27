@@ -1,9 +1,13 @@
-<h1>{{ pizza.name }}</h1>
+{% extends 'base.html.twig' %}
 
-<p>
-  {{ pizza.description }}
-</p>
+{% block body %}
+  <h1>{{ pizza.name }}</h1>
 
-<p>
-  Prix : {{ pizza.price }} €
-</p>
+  <p>
+    {{ pizza.description }}
+  </p>
+
+  <p>
+    Prix : {{ pizza.price }} €
+  </p>
+{% endblock %}
