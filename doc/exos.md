@@ -105,7 +105,7 @@
 - Grace à une entité de votre choix, rendre éditable la numéro
   de téléphone et l'emplacement de la pizzeria
 - Vous pouvez rajouter du style pour votre pizzeria :)
-- Grace à la [**session**](https://symfony.com/doc/current/session.html),
+- Grace à la [**session**](https://symfony.com/doc/current/controller.html#managing-the-session),
   ajouter un bouton "Ajouter au panier" sur chaque pizza
   de la page d'accueil. Lors du clique sur le bouton,
   l'identifiant de la pizza doit être enregistré en session
