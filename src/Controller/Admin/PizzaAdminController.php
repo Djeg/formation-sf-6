@@ -12,16 +12,22 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PizzaAdminController extends AbstractController
 {
     /**
      * @Route("/admin/pizza/list", name="app_admin_pizzaAdmin_list")
      */
-    public function list(PizzaRepository $repository): Response
+    public function list(Request $request, PizzaRepository $repository): Response
     {
         // Récupére toutes les pizzas
         $pizzas = $repository->findAll();
+
+        // Permet de debugger une variable
+        dump($repository);
+        dump($request);
+        dump($pizzas);
 
         // Retourne une page html
         return $this->render('Admin/PizzaAdmin/list.html.twig', [
@@ -43,14 +49,18 @@ class PizzaAdminController extends AbstractController
             $pizza = (new Pizza())
                 ->setName($request->request->get('name'))
                 ->setDescription($request->request->get('description'))
-                ->setPrice($request->request->get('price'))
+                ->setPrice((float)$request->request->get('price'))
                 ->setImage($request->request->get('image'));
 
             // On enregistre la pizza en base de données
             $manager->persist($pizza);
             $manager->flush();
-        }
 
+            // Redirige vers la page de la pizza
+            return $this->redirectToRoute('app_admin_pizzaAdmin_show', [
+                'id' => $pizza->getId(),
+            ]);
+        }
 
         // Affiche le formulaire de création de pizza
         return $this->render('Admin/PizzaAdmin/create.html.twig');
@@ -63,6 +73,12 @@ class PizzaAdminController extends AbstractController
     {
         // Récupération de la pizza
         $pizza = $repository->find($id);
+
+        // Si je n'ai pas de pizza
+        if ($pizza === null) {
+            // Lever une erreur 404
+            throw new NotFoundHttpException();
+        }
 
         // On affiche la page html
         return $this->render('Admin/PizzaAdmin/show.html.twig', [
