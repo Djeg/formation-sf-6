@@ -95,7 +95,7 @@
 
 # Exo - Frontend
 
-- Dans le dossier, rajouter un dossier "Front"
+- Dans le dossier Controller, rajouter un dossier "Front"
 - Créer dans le dossier "Front" le controller: FrontController
 - Ajouter une route "/" correspondant à la page d'accueil
   de la pizzeria.
