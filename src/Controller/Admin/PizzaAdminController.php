@@ -24,11 +24,6 @@ class PizzaAdminController extends AbstractController
         // Récupére toutes les pizzas
         $pizzas = $repository->findAll();
 
-        // Permet de debugger une variable
-        dump($repository);
-        dump($request);
-        dump($pizzas);
-
         // Retourne une page html
         return $this->render('Admin/PizzaAdmin/list.html.twig', [
             'pizzas' => $pizzas,

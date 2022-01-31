@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h1>Mon Panier</h1>
+
+  {% for pizza in pizzas %}
+    <p>{{ pizza.name }}</p>
+    <p>Quantité : {{ cart[pizza.id] }}</p>
+    <p>Total : {{ pizza.price * cart[pizza.id] }} €</p>
+  {% endfor %}
+
+  <p>Total : {{ total }} €</p>
+{% endblock %}

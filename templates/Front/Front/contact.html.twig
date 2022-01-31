@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div>
+    <a href="{{ path('app_front_front_home') }}">Revenir à l'accueil</a>
+  </div>
+
+  <h1>Nous contacter</h1>
+
+  <p>
+    Téléphone : {{ details.fixedPhoneNumber }}
+    <br />
+    Mobile : {{ details.mobilePhoneNumber }}
+  </p>
+
+  {{ details.location|raw }}
+{% endblock %}

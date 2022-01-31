@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <h1>Bienvenue dans ma pizzeria</h1>
+  <p>
+    <a href="{{ path('app_front_front_cart') }}">
+      Mon Panier ({{ cartSize  }})
+    </a>
+  </p>
+
+  {% for pizza in pizzas %}
+    <div>
+      {% if pizza.image %}
+        <p>
+          <img src="{{ pizza.image }}" alt="{{ pizza.name }}" />
+        </p>
+      {% endif %}
+
+      <p>{{ pizza.name }}</p>
+      <p>{{ pizza.price }} €</p>
+      <p>
+        <a href="{{ path('app_front_front_addToCart', {
+          'id': pizza.id
+        }) }}">Ajouter au panier</a>
+      </p>
+    </div>
+  {% endfor %}
+
+{% endblock %}
