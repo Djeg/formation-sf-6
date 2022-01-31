@@ -9,7 +9,9 @@ use App\Repository\PizzaRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FrontController extends AbstractController
 {
@@ -95,5 +97,59 @@ class FrontController extends AbstractController
             'cart' => $cart,
             'total' => $total,
         ]);
+    }
+
+    /**
+     * @Route("/mon-panier/supprimer/{id}", name="app_front_front_removeFromCart")
+     */
+    public function removeFromCart(int $id, SessionInterface $session): Response
+    {
+        // Récupération du panier
+        $cart = $session->get('cart', []);
+
+        // Test si le panier à la pizza à l'id
+        // indiqué
+        if (isset($cart[$id])) {
+            // supprime la pizza du panier
+            unset($cart[$id]);
+        }
+
+        // On met à jour le panier dans la session
+        $session->set('cart', $cart);
+
+        // Redirige vers la page du panier
+        return $this->redirectToRoute('app_front_front_cart');
+    }
+
+    /**
+     * @Route("/mon-panier/modifier/{id}/{quantity}", name="app_front_front_updateCart")
+     */
+    public function updateCart(int $id, int $quantity, SessionInterface $session): Response
+    {
+        // Si la quantité est inférieur ou égale à 0
+        if ($quantity <= 0) {
+            // On redirige vers la supression de la pizza du panier
+            return $this->redirectToRoute('app_front_front_removeFromCart', [
+                'id' => $id,
+            ]);
+        }
+
+        // Récupération du panier
+        $cart = $session->get('cart', []);
+
+        // Si la pizza n'est présente dans mon panier
+        if (!isset($cart[$id])) {
+            // On léve un erreur 404
+            throw new NotFoundHttpException();
+        }
+
+        // On met à jour la quantité de pizza
+        $cart[$id] = $quantity;
+
+        // On enregistre le panier dans la session
+        $session->set('cart', $cart);
+
+        // On redirige vers la page du panier
+        return $this->redirectToRoute('app_front_front_cart');
     }
 }

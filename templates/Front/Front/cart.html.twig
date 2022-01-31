@@ -7,6 +7,22 @@
     <p>{{ pizza.name }}</p>
     <p>Quantité : {{ cart[pizza.id] }}</p>
     <p>Total : {{ pizza.price * cart[pizza.id] }} €</p>
+    <p>
+      <a href="{{ path('app_front_front_removeFromCart', {
+        'id': pizza.id,
+      }) }}">Supprimer du panier</a>
+    </p>
+    <p>
+      <a href="{{ path('app_front_front_updateCart', {
+        'id': pizza.id,
+        'quantity': cart[pizza.id] + 1,
+      }) }}">Ajouter une pizza</a>
+
+      <a href="{{ path('app_front_front_updateCart', {
+        'id': pizza.id,
+        'quantity': cart[pizza.id] - 1,
+      }) }}">Supprimer une pizza</a>
+    </p>
   {% endfor %}
 
   <p>Total : {{ total }} €</p>
