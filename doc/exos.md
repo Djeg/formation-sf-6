@@ -105,15 +105,15 @@
 - Grace à une entité de votre choix, rendre éditable la numéro
   de téléphone et l'emplacement de la pizzeria
 - Vous pouvez rajouter du style pour votre pizzeria :)
-- Grace à la [**session**](https://symfony.com/doc/current/controller.html#managing-the-session),
-  ajouter un bouton "Ajouter au panier" sur chaque pizza
-  de la page d'accueil. Lors du clique sur le bouton,
-  l'identifiant de la pizza doit être enregistré en session
-- Ajouter une page "mon panier" permettant de consulter toutes
-  les pizzas ajouter dans votre panier
-- Ajouter un bouton "commander" sur la page "mon panier" qui
-  créer une commande en base de données avec les champs suivants:
-  - les ids des pizzas commandé
-  - l'email de la personne qui commande
-  - son numéro de téléphone
-  - son address postale
+
+# Exo - Panier
+
+- Ajouter la possibilité d'ajouter une pizza dans un panier
+  (utiliser la session, et faire une route dédié à l'ajout
+  dans le panier)
+- Ajouter une route "/mon-panier" qui affiche toutes les pizzas
+  de mon panier avec leurs totaux et le prix total de mon panier.
+- Ajouter une route "/supprimer-panier/{id}" qui supprime totalement
+  une pizza du panier
+- Ajouter une route "/modifier-panier/{id}/{quantite}" ici on change
+  la quantité de la pizza à l'id donnée
