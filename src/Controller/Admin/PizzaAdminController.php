@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller\Admin;
 
 use App\Entity\Pizza;
+use App\Form\PizzaType;
 use App\Repository\PizzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use ProxyManager\ProxyGenerator\LazyLoadingGhost\MethodGenerator\SetProxyInitializer;
@@ -35,30 +36,32 @@ class PizzaAdminController extends AbstractController
      */
     public function create(Request $request, EntityManagerInterface $manager): Response
     {
-        // récupération de la méthode HTTP
-        $method = $request->getMethod();
+        // Création du formulaire
+        $form = $this->createForm(PizzaType::class);
 
-        // Si le formulaire a été envoyé
-        if ($method === 'POST') {
-            // Création d'une nouvelle pizza
-            $pizza = (new Pizza())
-                ->setName($request->request->get('name'))
-                ->setDescription($request->request->get('description'))
-                ->setPrice((float)$request->request->get('price'))
-                ->setImage($request->request->get('image'));
+        // Remplissage des champs de formulaire
+        $form->handleRequest($request);
 
-            // On enregistre la pizza en base de données
+        // Si le formulaire est soumis et valide !
+        if ($form->isSubmitted() && $form->isValid()) {
+            // On récupére l'entité pizza
+            $pizza = $form->getData();
+
+            // On enregistre dans la base de données
             $manager->persist($pizza);
             $manager->flush();
 
-            // Redirige vers la page de la pizza
-            return $this->redirectToRoute('app_admin_pizzaAdmin_show', [
-                'id' => $pizza->getId(),
-            ]);
+            // Redirection sur la liste des pizzas
+            return $this->redirectToRoute('app_admin_pizzaAdmin_list');
         }
 
+        // Création de la vue (le HTLML du formulaire)
+        $formView = $form->createView();
+
         // Affiche le formulaire de création de pizza
-        return $this->render('Admin/PizzaAdmin/create.html.twig');
+        return $this->render('Admin/PizzaAdmin/create.html.twig', [
+            'pizzaForm' => $formView,
+        ]);
     }
 
     /**
