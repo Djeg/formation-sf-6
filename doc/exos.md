@@ -117,3 +117,15 @@
   une pizza du panier
 - Ajouter une route "/modifier-panier/{id}/{quantite}" ici on change
   la quantité de la pizza à l'id donnée
+
+# Exo - Formulaires
+
+- Créer un "form type" pour l'entité pizza (`symfony console make:form Pizza`).
+- Personaliser ce form type pour contenir les bons champs et un bouton d'envoie
+- Utiliser ce formulaire dans la page PizzaAdminController::create
+- Utiliser ce formulaure dans la page PizzaAdminController::update
+- Créer une page "/nous-contacter" dans le front controller
+- Créé un formulaire de contact avec les champs suivant:
+  - email (email)
+  - message (textarea)
+- Enregistré le message de contact dans la base de données :)
