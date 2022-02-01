@@ -8,11 +8,11 @@ use App\Entity\Pizza;
 use App\Form\PizzaType;
 use App\Repository\PizzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use ProxyManager\ProxyGenerator\LazyLoadingGhost\MethodGenerator\SetProxyInitializer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PizzaAdminController extends AbstractController
@@ -37,25 +37,26 @@ class PizzaAdminController extends AbstractController
     public function create(Request $request, EntityManagerInterface $manager): Response
     {
         // Création du formulaire
-        $form = $this->createForm(PizzaType::class);
+        $form = $this->createAndHandleForm(
+            PizzaType::class,
+            $request,
+        );
 
-        // Remplissage des champs de formulaire
-        $form->handleRequest($request);
-
-        // Si le formulaire est soumis et valide !
-        if ($form->isSubmitted() && $form->isValid()) {
-            // On récupére l'entité pizza
+        // Si le formulaire à été soumis et est valide
+        if ($this->isValidForm($form)) {
+            // Récupération de la pizza
             $pizza = $form->getData();
 
-            // On enregistre dans la base de données
+            // Enregistrement des données dans la base
             $manager->persist($pizza);
             $manager->flush();
 
-            // Redirection sur la liste des pizzas
+            // Redirection vers la liste des pizzas
             return $this->redirectToRoute('app_admin_pizzaAdmin_list');
         }
 
-        // Création de la vue (le HTLML du formulaire)
+        // Crétion de la vue du formulaire : 
+        // génération du HTML du formulaire
         $formView = $form->createView();
 
         // Affiche le formulaire de création de pizza
@@ -67,17 +68,8 @@ class PizzaAdminController extends AbstractController
     /**
      * @Route("/admin/pizza/{id}", name="app_admin_pizzaAdmin_show")
      */
-    public function show(int $id, PizzaRepository $repository): Response
+    public function show(Pizza $pizza): Response
     {
-        // Récupération de la pizza
-        $pizza = $repository->find($id);
-
-        // Si je n'ai pas de pizza
-        if ($pizza === null) {
-            // Lever une erreur 404
-            throw new NotFoundHttpException();
-        }
-
         // On affiche la page html
         return $this->render('Admin/PizzaAdmin/show.html.twig', [
             'pizza' => $pizza,
@@ -88,49 +80,64 @@ class PizzaAdminController extends AbstractController
      * @Route("/admin/pizza/{id}/supprimer", name="app_admin_pizzaAdmin_remove")
      */
     public function remove(
-        int $id,
-        PizzaRepository $repository,
+        Pizza $pizza,
         EntityManagerInterface $manager,
     ): Response {
-        // On récupére la pizza que l'on veut supprimer
-        $pizza = $repository->find($id);
-
         // On supprime la pizza
         $manager->remove($pizza);
         $manager->flush();
 
-        return new Response("La pizza $id à bien été supprimée");
+        return new Response("La pizza {$pizza->getId()} à bien été supprimée");
     }
 
     /**
      * @Route("/admin/pizza/{id}/modifier", name="app_admin_pizzaAdmin_update")
      */
     public function update(
-        int $id,
-        PizzaRepository $repository,
+        Pizza $pizza,
         EntityManagerInterface $manager,
         Request $request,
     ): Response {
-        // On récupére la pizza que l'on veut mettre à jour
-        $pizza = $repository->find($id);
+        // Création du formulaire remplie avec les données
+        // de la pizza
+        $form = $this->createAndHandleForm(
+            PizzaType::class,
+            $request,
+            $pizza,
+        );
 
-        // Si le formulaire a été envoyé
-        if ($request->getMethod() === 'POST') {
-            // On vas remplir notre pizza avec
-            // les données du formulaire
-            $pizza
-                ->setName($request->request->get('name'))
-                ->setDescription($request->request->get('description'))
-                ->setPrice($request->request->get('price'))
-                ->setImage($request->request->get('image'));
-
+        // Si le formulaire est envoyé et valide
+        if ($this->isValidForm($form)) {
             // On enregistre la pizza en base de données
-            $manager->persist($pizza);
+            $manager->persist($form->getData());
             $manager->flush();
+
+            // On redirige vers la liste des pizzas
+            return $this->redirectToRoute('app_admin_pizzaAdmin_list');
         }
 
         return $this->render('Admin/PizzaAdmin/update.html.twig', [
-            'pizza' => $pizza,
+            'form' => $form->createView(),
         ]);
+    }
+
+    protected function createAndHandleForm(
+        string $formType,
+        Request $request,
+        $data = null,
+    ): FormInterface {
+        // Création du formulaire remplie avec les données
+        // de la pizza
+        $form = $this->createForm($formType, $data);
+
+        // Remplir le formulaire avec les données de l'utilisateur
+        $form->handleRequest($request);
+
+        return $form;
+    }
+
+    protected function isValidForm(FormInterface $form): bool
+    {
+        return $form->isSubmitted() && $form->isValid();
     }
 }

@@ -5,25 +5,13 @@
     <a href="{{ path('app_admin_pizzaAdmin_list') }}">Revenir à la liste des pizzas</a>
   </div>
 
-  <form method="POST">
+  {{ form_start(form) }}
     <div>
-      <label for="name">Nom de la pizza :</label>
-      <input type="text" name="name" id="name" value="{{ pizza.name }}" />
+      {{ form_label(form.name) }}
+      <hR/>
+      {{ form_widget(form.name) }}
+      <hR/>
+      {{ form_errors(form.name) }}
     </div>
-    <div>
-      <label for="description">Description de la pizza :</label>
-      <textarea id="description" name="description">{{ pizza.description }}</textarea>
-    </div>
-    <div>
-      <label for="price">Prix de la pizza :</label>
-      <input type="money" name="price" id="price" value="{{ pizza.price }}" />
-    </div>
-    <div>
-      <label for="image">Image de la pizza :</label>
-      <input type="text" name="image" id="image" value="{{ pizza.image }}" />
-    </div>
-    <div>
-      <button type="submit">Mettre à jour la pizza</button>
-    </div>
-  </form>
+  {{ form_end(form) }}
 {% endblock %}

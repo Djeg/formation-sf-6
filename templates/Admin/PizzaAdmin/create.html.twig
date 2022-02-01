@@ -5,5 +5,21 @@
     <a href="{{ path('app_admin_pizzaAdmin_list') }}">Revenir à la liste des pizzas</a>
   </div>
 
-  {{ form(pizzaForm) }}
+  {{ form_start(pizzaForm) }}
+    <div>
+      {{ form_row(pizzaForm.name) }}
+    </div>
+    <hR />
+    <div>
+      {{ form_label(pizzaForm.price) }}
+      <hR/>
+      {{ form_widget(pizzaForm.price) }}
+      <hR/>
+      <div class="errors">
+        {% for error in pizzaForm.price.vars.errors %}
+          <h2>{{ error.message }}</h2>
+        {% endfor %}
+      </div>
+    </div>
+  {{ form_end(pizzaForm) }}
 {% endblock %}
