@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block subTitle %}
+  Liste des ingrédients
+{% endblock %}
+
+{% block body %}
+  <h1>Liste des ingrédients</h1>
+  <p>
+    <a href="{{ path('app_admin_ingredientAdmin_create') }}">Ajouter un ingredient</a>
+  </p>
+
+  {% for ingredient in ingredients %}
+    <p>{{ ingredient.name }}, prix: {{ ingredient.price }} €<p>
+    <p>
+      <a href="{{ path('app_admin_ingredientAdmin_update', {
+        id: ingredient.id
+      }) }}">Modifier l'ingredient</a>
+
+      <a href="{{ path('app_admin_ingredientAdmin_remove', {
+        id: ingredient.id
+      }) }}">Supprimer l'ingredient</a>
+    </p>
+  {% endfor %}
+{% endblock %}

@@ -11,24 +11,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class PizzaAdminController extends AbstractController
+class PizzaAdminController extends AdminController
 {
     /**
      * @Route("/admin/pizza/list", name="app_admin_pizzaAdmin_list")
      */
-    public function list(Request $request, PizzaRepository $repository): Response
+    public function list(PizzaRepository $repository): Response
     {
-        // Récupére toutes les pizzas
-        $pizzas = $repository->findAll();
-
-        // Retourne une page html
-        return $this->render('Admin/PizzaAdmin/list.html.twig', [
-            'pizzas' => $pizzas,
-        ]);
+        return $this->entityList($repository, 'PizzaAdmin', 'pizzas');
     }
 
     /**
