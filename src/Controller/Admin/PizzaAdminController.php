@@ -98,6 +98,8 @@ class PizzaAdminController extends AbstractController
         EntityManagerInterface $manager,
         Request $request,
     ): Response {
+        // 
+        $pizza->getIngredients();
         // Création du formulaire remplie avec les données
         // de la pizza
         $form = $this->createAndHandleForm(

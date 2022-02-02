@@ -129,3 +129,19 @@
   - email (email)
   - message (textarea)
 - Enregistré le message de contact dans la base de données :)
+
+# Exo - Relation 1
+
+- Créer une entité Ingredient avec les champs suivant:
+  - name: string
+  - price: float
+- Attacher la pizza à l'ingredient en utilisant la commande
+  `symfony console make:entity Pizza`
+- Mettre à jour la base de données `symfony console doctrine:schema:update --force`
+- Créer le controller suivant : IngredientAdminController
+- Ajouter les méthodes suivantes:
+  - list
+  - create
+  - update
+  - remove
+  - (Utiliser les formulaires symfony pour "create" et "update")
