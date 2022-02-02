@@ -140,8 +140,20 @@
 - Mettre à jour la base de données `symfony console doctrine:schema:update --force`
 - Créer le controller suivant : IngredientAdminController
 - Ajouter les méthodes suivantes:
+
   - list
   - create
   - update
   - remove
   - (Utiliser les formulaires symfony pour "create" et "update")
+
+- Ajouter une entité "boisson" (traduire en anglais) ainsi que
+  "entrée" et "dessert"
+- ces entités doivent contenir les champs suivant:
+  - name: string
+  - price: float
+  - image: string
+- Créer 3 controllers dans le répertoire Admin et mettre
+  en place les mêmes routes que pour les pizzas et ingrédients
+  (create, update, list et remove)
+  (Utiliser aussi les formulaires symfony !)
