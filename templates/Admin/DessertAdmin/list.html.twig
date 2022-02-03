@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block subTitle %}
+  Liste des desserts
+{% endblock %}
+
+{% block body %}
+  <h1>Liste des desserts</h1>
+  <p>
+    <a href="{{ path('app_admin_dessertAdmin_create') }}">Ajouter un dessert</a>
+  </p>
+
+  {% for dessert in desserts %}
+    <p>{{ dessert.name }}, prix: {{ dessert.price }} €<p>
+    <p>
+      <a href="{{ path('app_admin_dessertAdmin_update', {
+        id: dessert.id
+      }) }}">Modifier l'dessert</a>
+
+      <a href="{{ path('app_admin_dessertAdmin_remove', {
+        id: dessert.id
+      }) }}">Supprimer l'dessert</a>
+    </p>
+  {% endfor %}
+{% endblock %}

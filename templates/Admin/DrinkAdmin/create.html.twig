@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div>
+    <a href="{{ path('app_admin_drinkAdmin_list') }}">Revenir à la liste des boissons</a>
+  </div>
+
+  {{ form(form) }}
+{% endblock %}

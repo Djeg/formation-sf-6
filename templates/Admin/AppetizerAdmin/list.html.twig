@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block subTitle %}
+  Liste des entréés
+{% endblock %}
+
+{% block body %}
+  <h1>Liste des entréés</h1>
+  <p>
+    <a href="{{ path('app_admin_appetizerAdmin_create') }}">Ajouter un appetizer</a>
+  </p>
+
+  {% for appetizer in appetizers %}
+    <p>{{ appetizer.name }}, prix: {{ appetizer.price }} €<p>
+    <p>
+      <a href="{{ path('app_admin_appetizerAdmin_update', {
+        id: appetizer.id
+      }) }}">Modifier l'appetizer</a>
+
+      <a href="{{ path('app_admin_appetizerAdmin_remove', {
+        id: appetizer.id
+      }) }}">Supprimer l'appetizer</a>
+    </p>
+  {% endfor %}
+{% endblock %}

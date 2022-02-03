@@ -157,3 +157,9 @@
   en place les mêmes routes que pour les pizzas et ingrédients
   (create, update, list et remove)
   (Utiliser aussi les formulaires symfony !)
+
+1. Entités
+   (2. Fixtures)
+2. Formulaires
+3. Controller
+4. Twig

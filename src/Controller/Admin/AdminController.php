@@ -85,6 +85,7 @@ class AdminController extends AbstractController
     private function getControllerName(): string
     {
         $controllerClass = $this::class;
+        dump($this::class);
         $controllerParts = explode('\\', $controllerClass);
         $controllerName = end($controllerParts);
 

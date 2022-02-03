@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  <div>
+    <a href="{{ path('app_admin_appetizerAdmin_list') }}">Revenir à la liste des entréés</a>
+  </div>
+
+  {{ form(form) }}
+{% endblock %}

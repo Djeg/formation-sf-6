@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block subTitle %}
+  Liste des boissons
+{% endblock %}
+
+{% block body %}
+  <h1>Liste des boissons</h1>
+  <p>
+    <a href="{{ path('app_admin_drinkAdmin_create') }}">Ajouter un drink</a>
+  </p>
+
+  {% for drink in drinks %}
+    <p>{{ drink.name }}, prix: {{ drink.price }} €<p>
+    <p>
+      <a href="{{ path('app_admin_drinkAdmin_update', {
+        id: drink.id
+      }) }}">Modifier l'drink</a>
+
+      <a href="{{ path('app_admin_drinkAdmin_remove', {
+        id: drink.id
+      }) }}">Supprimer l'drink</a>
+    </p>
+  {% endfor %}
+{% endblock %}
