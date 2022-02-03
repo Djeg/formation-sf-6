@@ -9,6 +9,7 @@
 4. Installer symfony avec la commande : `composer install`
 5. Créé la base de donnée avec la commande : `symfony console doctrine:database:create`
 6. Créé les tables : `symfony console doctrine:schema:update --force`
+7. Lancer le server symfony : `symfony serve --port=4444`
 
 ## Exercices
 
