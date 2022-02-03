@@ -12,6 +12,14 @@
 
   {% for pizza in pizzas %}
     <p>{{ pizza.name }}, prix: {{ pizza.price }} €<p>
+    <div>
+      <p>Liste des ingrédients</p>
+      <ul>
+        {% for ingredient in pizza.ingredients %}
+          <li>{{ ingredient.name }}</li>
+        {% endfor %}
+      </ul>
+    </div>
     <p>
       <a href="{{ path('app_admin_pizzaAdmin_update', {
         id: pizza.id

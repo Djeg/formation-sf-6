@@ -68,6 +68,7 @@ class FrontController extends AbstractController
 
         // On met à jour le panier dans la session
         $session->set('cart', $cart);
+        $session->set('cart_size', array_sum($cart));
 
         // Redirige vers la liste des pizzas
         return $this->redirectToRoute('app_front_front_home');
@@ -116,6 +117,7 @@ class FrontController extends AbstractController
 
         // On met à jour le panier dans la session
         $session->set('cart', $cart);
+        $session->set('cart_size', array_sum($cart));
 
         // Redirige vers la page du panier
         return $this->redirectToRoute('app_front_front_cart');
@@ -148,6 +150,7 @@ class FrontController extends AbstractController
 
         // On enregistre le panier dans la session
         $session->set('cart', $cart);
+        $session->set('cart_size', array_sum($cart));
 
         // On redirige vers la page du panier
         return $this->redirectToRoute('app_front_front_cart');

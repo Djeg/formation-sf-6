@@ -3,15 +3,17 @@
 namespace App\Form;
 
 use App\Entity\Pizza;
+use App\Entity\Ingredient;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
 
 class PizzaType extends AbstractType
 {
@@ -41,6 +43,17 @@ class PizzaType extends AbstractType
             ->add('image', UrlType::class, [
                 'label' => 'Url de l\'image de la pizza :',
                 'required' => false,
+            ])
+            ->add('ingredients', EntityType::class, [
+                // Détermine l'entité à lier à notre pizza
+                'class' => Ingredient::class,
+                // Choix de la propriété qui s'affichera dans notre formulaire
+                'choice_label' => 'name',
+                // Permet de définir si ou peu séléctioner plusieurs entités
+                'multiple' => true,
+                // Permet de déterminer si l'on veut des radio/checkbox ou
+                // un select (true === checkbox, false === select)
+                'expanded' => true,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Créer la pizza',

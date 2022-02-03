@@ -19,7 +19,7 @@ class IngredientAdminController extends AdminController
      */
     public function list(IngredientRepository $repository): Response
     {
-        return $this->entityList($repository, 'IngredientAdmin', 'ingredients');
+        return $this->entityList($repository, 'ingredients');
     }
 
     /**
