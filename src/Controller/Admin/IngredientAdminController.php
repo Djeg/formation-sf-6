@@ -19,7 +19,7 @@ class IngredientAdminController extends AdminController
      */
     public function list(IngredientRepository $repository): Response
     {
-        return $this->entityList($repository, 'IngredientAdmin', 'ingredients');
+        return $this->entityList($repository, 'ingredients');
     }
 
     /**
@@ -27,20 +27,13 @@ class IngredientAdminController extends AdminController
      */
     public function create(Request $request, EntityManagerInterface $manager): Response
     {
-        $form = $this->createForm(IngredientType::class);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($form->getData());
-            $manager->flush();
-
-            return $this->redirectToRoute('app_admin_ingredientAdmin_list');
-        }
-
-        return $this->render('Admin/IngredientAdmin/create.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->createEntity(
+            $request,
+            $manager,
+            IngredientType::class,
+            'app_admin_ingredientAdmin_list',
+            'IngredientAdmin',
+        );
     }
 
     /**
@@ -51,20 +44,14 @@ class IngredientAdminController extends AdminController
         EntityManagerInterface $manager,
         Request $request,
     ): Response {
-        $form = $this->createForm(IngredientType::class, $ingredient);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager->persist($form->getData());
-            $manager->flush();
-
-            return $this->redirectToRoute('app_admin_ingredientAdmin_list');
-        }
-
-        return $this->render('Admin/IngredientAdmin/update.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->updateEntity(
+            $request,
+            $manager,
+            $ingredient,
+            IngredientType::class,
+            'app_admin_ingredientAdmin_list',
+            'IngredientAdmin',
+        );
     }
 
     /**
@@ -72,9 +59,10 @@ class IngredientAdminController extends AdminController
      */
     public function remove(Ingredient $ingredient, EntityManagerInterface $manager): Response
     {
-        $manager->remove($ingredient);
-        $manager->flush();
-
-        return $this->redirectToRoute('app_admin_ingredientAdmin_list');
+        return $this->removeEntity(
+            $manager,
+            $ingredient,
+            'app_admin_ingredientAdmin_list',
+        );
     }
 }

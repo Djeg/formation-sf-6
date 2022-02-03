@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
+use App\Entity\Admin\UpdatableEntity;
 use App\Repository\PizzaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PizzaRepository::class)]
-class Pizza
+class Pizza implements UpdatableEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

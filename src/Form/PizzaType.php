@@ -40,6 +40,7 @@ class PizzaType extends AbstractType
             ])
             ->add('image', UrlType::class, [
                 'label' => 'Url de l\'image de la pizza :',
+                'required' => false,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Créer la pizza',

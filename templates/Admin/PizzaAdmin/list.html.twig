@@ -13,10 +13,6 @@
   {% for pizza in pizzas %}
     <p>{{ pizza.name }}, prix: {{ pizza.price }} €<p>
     <p>
-      <a href="{{ path('app_admin_pizzaAdmin_show', {
-        id: pizza.id
-      }) }}">Voir la pizza</a>
-
       <a href="{{ path('app_admin_pizzaAdmin_update', {
         id: pizza.id
       }) }}">Modifier la pizza</a>

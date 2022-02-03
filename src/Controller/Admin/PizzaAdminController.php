@@ -20,7 +20,7 @@ class PizzaAdminController extends AdminController
      */
     public function list(PizzaRepository $repository): Response
     {
-        return $this->entityList($repository, 'PizzaAdmin', 'pizzas');
+        return $this->entityList($repository, 'pizzas');
     }
 
     /**
@@ -28,44 +28,13 @@ class PizzaAdminController extends AdminController
      */
     public function create(Request $request, EntityManagerInterface $manager): Response
     {
-        // Création du formulaire
-        $form = $this->createAndHandleForm(
-            PizzaType::class,
+        return $this->createEntity(
             $request,
+            $manager,
+            PizzaType::class,
+            'app_admin_pizzaAdmin_list',
+            'PizzaAdmin',
         );
-
-        // Si le formulaire à été soumis et est valide
-        if ($this->isValidForm($form)) {
-            // Récupération de la pizza
-            $pizza = $form->getData();
-
-            // Enregistrement des données dans la base
-            $manager->persist($pizza);
-            $manager->flush();
-
-            // Redirection vers la liste des pizzas
-            return $this->redirectToRoute('app_admin_pizzaAdmin_list');
-        }
-
-        // Crétion de la vue du formulaire : 
-        // génération du HTML du formulaire
-        $formView = $form->createView();
-
-        // Affiche le formulaire de création de pizza
-        return $this->render('Admin/PizzaAdmin/create.html.twig', [
-            'pizzaForm' => $formView,
-        ]);
-    }
-
-    /**
-     * @Route("/admin/pizza/{id}", name="app_admin_pizzaAdmin_show")
-     */
-    public function show(Pizza $pizza): Response
-    {
-        // On affiche la page html
-        return $this->render('Admin/PizzaAdmin/show.html.twig', [
-            'pizza' => $pizza,
-        ]);
     }
 
     /**
@@ -75,11 +44,11 @@ class PizzaAdminController extends AdminController
         Pizza $pizza,
         EntityManagerInterface $manager,
     ): Response {
-        // On supprime la pizza
-        $manager->remove($pizza);
-        $manager->flush();
-
-        return new Response("La pizza {$pizza->getId()} à bien été supprimée");
+        return $this->removeEntity(
+            $manager,
+            $pizza,
+            'app_admin_pizzaAdmin_list',
+        );
     }
 
     /**
@@ -90,48 +59,13 @@ class PizzaAdminController extends AdminController
         EntityManagerInterface $manager,
         Request $request,
     ): Response {
-        // 
-        $pizza->getIngredients();
-        // Création du formulaire remplie avec les données
-        // de la pizza
-        $form = $this->createAndHandleForm(
-            PizzaType::class,
+        return $this->updateEntity(
             $request,
+            $manager,
             $pizza,
+            PizzaType::class,
+            'app_admin_pizzaAdmin_list',
+            'PizzaAdmin',
         );
-
-        // Si le formulaire est envoyé et valide
-        if ($this->isValidForm($form)) {
-            // On enregistre la pizza en base de données
-            $manager->persist($form->getData());
-            $manager->flush();
-
-            // On redirige vers la liste des pizzas
-            return $this->redirectToRoute('app_admin_pizzaAdmin_list');
-        }
-
-        return $this->render('Admin/PizzaAdmin/update.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    }
-
-    protected function createAndHandleForm(
-        string $formType,
-        Request $request,
-        $data = null,
-    ): FormInterface {
-        // Création du formulaire remplie avec les données
-        // de la pizza
-        $form = $this->createForm($formType, $data);
-
-        // Remplir le formulaire avec les données de l'utilisateur
-        $form->handleRequest($request);
-
-        return $form;
-    }
-
-    protected function isValidForm(FormInterface $form): bool
-    {
-        return $form->isSubmitted() && $form->isValid();
     }
 }
