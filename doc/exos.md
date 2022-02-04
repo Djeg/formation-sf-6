@@ -158,8 +158,42 @@
   (create, update, list et remove)
   (Utiliser aussi les formulaires symfony !)
 
-1. Entités
-   (2. Fixtures)
-2. Formulaires
-3. Controller
-4. Twig
+# Exo - Refaire Notre Pizzeria
+
+## 1. Installation
+
+1. Créer un nouveau projet symfony en utilisant la commande
+   : `symfony new --webapp new-pizza-app`
+2. Ouvrir le projet avec VSCode
+3. Configurer votre base de données dans le fichier `.env`
+4. Installer alice pour gérer les fixtures : `composer require hautelook/alice-bundle`
+
+## 2. Gestion des ingrédients
+
+1. Créer une entité "Ingredient" avec les champs
+   suivant:
+   - name: string
+   - price: float
+2. Créer des fixtures pour ces ingrédients
+3. Créer un formulaire d'édition et de création
+   pour les ingrédients
+4. Mettre en place un espace d'administration pour les
+   ingrédient
+
+## 3. Gestion des plats
+
+1. Ajouter une entité "Dish" avec les champs suivant:
+
+- name: string
+- price: float
+- description: string
+- image: string
+- type: string (contiendra: "pizza", "entrée", "dessert", "pasta" etc ...)
+- ingredients: relation vers Ingredient
+
+2. Créer des fixtures pour les plats
+3. Créer un formulaire pour le plat (vous pouvez utiliser
+   le champ: https://symfony.com/doc/current/reference/forms/types/choice.html pour
+   gérer vos types de plats)
+4. Mettre en place un espace d'administration pour les
+   plats

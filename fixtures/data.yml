@@ -1,0 +1,26 @@
+# On met le nom complet de l'entité à générer
+App\Entity\Ingredient:
+  # On nomme la génération
+  tomate:
+    # Spécifier les différents champs de mon entité
+    # (pas besoin de spécifier d'id)
+    name: "Base tomate"
+    price: 0.2
+  champignons:
+    # Spécifier les différents champs de mon entité
+    # (pas besoin de spécifier d'id)
+    name: "Champignons"
+    price: 0.3
+  ingredient_{1..50}:
+    # Spécifier les différents champs de mon entité
+    # (pas besoin de spécifier d'id)
+    name: "<word()>"
+    price: "<randomFloat(2, 0, 2)>"
+
+App\Entity\Pizza:
+  pizza_{1..10}:
+    name: "<sentence()>"
+    price: "<randomFloat(2, 8, 15)>"
+    description: "<paragraph()>"
+    image: "<imageUrl(640, 480, 'pizza')>"
+    ingredients: "<numberBetween(4, 10)>x @ingredient_*"
